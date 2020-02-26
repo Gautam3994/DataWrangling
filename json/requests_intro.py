@@ -30,3 +30,23 @@ payload = \
 params_response = requests.get("https://httpbin.org/get", params=payload)
 
 print(params_response.text)
+print(params_response.url)  # https://httpbin.org/get?count=2&page=25
+
+""""post request"""
+payload = {
+    "username": "Gautam",
+    "password": "test"
+}
+data_response = requests.post("https://httpbin.org/post", data=payload)
+data_dict = data_response.json()
+print(data_dict['form'])
+
+"""basic auth"""
+
+auth_response = requests.get("https://httpbin.org/basic-auth/Gautam/test", auth=("Gautam", "test"))
+# print(auth_response.text)
+print(auth_response)
+
+"""time out"""
+delay_response = requests.get("https://httpbin.org/delay/6", timeout=3)
+print(delay_response)

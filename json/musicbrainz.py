@@ -3,7 +3,6 @@ To experiment with this code freely you will have to run this code locally.
 Take a look at the main() function for an example of how to use the code. We
 have provided example json output in the other code editor tabs for you to look
 at, but you will not be able to run any queries through our UI.
-https://musicbrainz.org/doc/Development/XML_Web_Service/Version_2
 """
 import json
 import requests
@@ -67,25 +66,26 @@ def main():
 
     # Query for information in the database about bands named Nirvana
     results = query_by_name(ARTIST_URL, query_type["simple"], "Nirvana")
-    pretty_print(results)
+    # pretty_print(results)
 
     # Isolate information from the 4th band returned (index 3)
-    # print("\nARTIST:")
+    print("\nARTIST:")
     # pretty_print(results["artists"][3])
-    #
+
     # # Query for releases from that band using the artist_id
-    # artist_id = results["artists"][3]["id"]
-    # artist_data = query_site(ARTIST_URL, query_type["releases"], artist_id)
-    # releases = artist_data["releases"]
-    #
-    # # Print information about releases from the selected band
-    # print("\nONE RELEASE:")
+    artist_id = results["artists"][3]["id"]
+    artist_data = query_site(ARTIST_URL, query_type["releases"], artist_id)
+    releases = artist_data["releases"]
+
+    # Print information about releases from the selected band
+    print("\nONE RELEASE:")
     # pretty_print(releases[0], indent=2)
-    #
-    # release_titles = [r["title"] for r in releases]
-    # print("\nALL TITLES:")
-    # for t in release_titles:
-    #     print(t)
+
+    release_titles = [r["title"] for r in releases]
+
+    print("\nALL TITLES:")
+    for t in release_titles:
+        print(t)
 
 
 if __name__ == '__main__':
