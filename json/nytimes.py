@@ -25,6 +25,8 @@ the API by yourself.
 """
 import json
 import codecs
+import pprint
+
 import requests
 
 URL_MAIN = "http://api.nytimes.com/svc/"
@@ -43,8 +45,15 @@ def article_overview(kind, period):
     data = get_from_file(kind, period)
     titles = []
     urls = []
-    # YOUR CODE HERE
-
+    for i in range(len(data)):
+        dict = {
+            data[i]['section']: data[i]['title']
+        }
+        titles.append(dict)
+        for media in (data[i]['media']):
+            for inner in media['media-metadata']:
+                if inner['format'] == 'Standard Thumbnail':
+                    urls.append(inner['url'])
     return titles, urls
 
 
@@ -97,10 +106,10 @@ def save_file(kind, period):
 
 def test():
     titles, urls = article_overview("viewed", 1)
-    # assert len(titles) == 20
-    # assert len(urls) == 30
+    assert len(titles) == 20
+    assert len(urls) == 30
     # assert titles[2] == {'Opinion': 'Professors, We Need You!'}
-    # assert urls[20] == 'http://graphics8.nytimes.com/images/2014/02/17/sports/ICEDANCE/ICEDANCE-thumbStandard.jpg'
+    assert urls[20] == 'http://graphics8.nytimes.com/images/2014/02/17/sports/ICEDANCE/ICEDANCE-thumbStandard.jpg'
 
 
 if __name__ == "__main__":
