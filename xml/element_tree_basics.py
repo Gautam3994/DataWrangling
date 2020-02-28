@@ -2,12 +2,16 @@ import xml.etree.ElementTree as ET
 import pprint
 
 tree = ET.parse('exampleresearcharticle.xml')
-root = tree.getroot()
+"""To load data from a string use the below method"""
+# data = ""
+# tree = ET.fromstring(data)
+root = tree.getroot()  # this returns a list
 
 """To find the child"""
 print("List of all child tags:")
 for child in root:
     print(child.tag)
+    # print(child.attrib)
 
 """To find a nested element"""
 title = root.find("./fm/bibl/title")
@@ -43,4 +47,6 @@ for a in root.findall("./fm/bibl/aug/au"):
     }
     full_data.append(data)
 pprint.pprint(full_data)
+
+
 
