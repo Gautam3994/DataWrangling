@@ -19,6 +19,11 @@ title = soup.title
 first_div = soup.div
 # print(first_div)
 
+"""You could also access the parent of a particular tag usin .parent"""
+parent = soup.div.parent
+print(parent.text)
+
+
 """So it is better to use find method"""
 other_divs = soup.find('div', class_="footer")
 # print(other_divs)
@@ -40,13 +45,14 @@ response = requests.get("https://coreyms.com/")
 """
     It is always better to save the data one time
 """
-# with open("coreyms.html", "w") as html:
-#     html.write(response.text)
+with open("coreyms.html", "w") as html:
+    html.write(response.text)
 
 with open("coreyms.html") as html:
-    corey_soup = BeautifulSoup(html, "lxml")
+    corey_soup = BeautifulSoup(html, 'lxml')
 
 # print(soup.prettify())
+corey_soup.encode('UTF-8')
 corey_articles = corey_soup.find_all('article')
 with open('coreyms.csv', 'w', newline='') as csv_file:  # to stop having empty row between two rows we use newline=''
     writer = csv.writer(csv_file)
@@ -58,8 +64,8 @@ with open('coreyms.csv', 'w', newline='') as csv_file:  # to stop having empty r
         try:
             video_src = article.div.span.iframe["src"]
             # video_src = article.find('iframe', class_="youtube-player")['src']
-            id = video_src.split("/")[-1].split("?")[0]
-            youtube = f"https://www.youtube.com/watch?v={id}"
+            _id = video_src.split("/")[-1].split("?")[0]
+            youtube = f"https://www.youtube.com/watch?v={_id}"
         except Exception:
             youtube = "None"
         writer.writerow([title, description, youtube])
